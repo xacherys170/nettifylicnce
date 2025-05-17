@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Generador de Licencias</title>
+</head>
+<body>
+  <h1>Generador de Licencias</h1>
+  <input id="user" placeholder="Nombre de usuario" />
+  <button onclick="generate()">Generar</button>
+  <pre id="output"></pre>
+
+  <script>
+    async function generate() {
+      const user = document.getElementById('user').value;
+      const res = await fetch('/.netlify/functions/generate', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ user })
+      });
+      const data = await res.json();
+      document.getElementById('output').innerText = JSON.stringify(data, null, 2);
+    }
+  </script>
+</body>
+</html>
